@@ -13,11 +13,11 @@ class students:
         return stu.name1, stu.id1, stu.dob1,stu.prof1
     def liststu(stu):
         stulist=[]
-        for i in stu.number1:
+        for i in range(stu.number1+1):
             stulist.append(stu.prof1)   
     def showstu(stu):
-        for i in stu.number1:
-            print("student id: "stu.prof1[0]+" and student dob: "+stu.prof1[1]+" and student name: "+stu.prof1[3])
+        for i in range(stu.number1+1):
+            print("student id: "+stu.prof1[0]+" and student dob: "+stu.prof1[1]+" and student name: "+stu.prof1[3])
 class courses:
     def numcour(course):
         course.number2=int(input("course number:"))
@@ -30,6 +30,7 @@ class courses:
 
 student=students()
 student.numstu()
+student.stuinfo()
 student.showstu()
 
 
