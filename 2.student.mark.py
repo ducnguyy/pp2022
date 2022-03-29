@@ -27,6 +27,7 @@ class courses:
         course.id2=input("course id:")
         return course.name2, course.id2
 
+
 student=students()
 student.numstu()
 student.showstu()
