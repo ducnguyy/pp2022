@@ -52,7 +52,8 @@ class mark(students,courses):
             print("name of course:"+class1.dict[j])
             for i in class1.infor1:
                 print("name: "+class1.infor1[i][1])
-                print("mark: "+str(class1.subinfo[j][int(i)]))
+                print("mark: "+str(class1.subinfo[int(j)][int(i)]))
+
             
 
 
