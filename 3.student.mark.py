@@ -1,3 +1,5 @@
+import math
+import numpy
 
 class Student:
     students = {}
@@ -101,6 +103,7 @@ class Mark(Course):
         student_id=input("Student id: ")
         course_id=input("Course id: ")
         score = input("Add grade: ")
+        score=math.floor(score)
         student1=Student.find(student_id)
         course1=Course.find(course_id)
         weightscore=(int(course1.weight))*int(score)
