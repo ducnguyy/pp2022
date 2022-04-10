@@ -1,5 +1,6 @@
 import math
-import numpy
+import numpy as np
+import curses as css
 
 class Student:
     students = {}
@@ -88,6 +89,8 @@ class Mark(Course):
     
     marks = {}
     tuple=(Course.courses,Student.students)
+    gpa = {}
+    sorted_marksheet={}
 
 
     def __init__(self, course, student, score, weightscore):
@@ -103,7 +106,7 @@ class Mark(Course):
         student_id=input("Student id: ")
         course_id=input("Course id: ")
         score = input("Add grade: ")
-        score=math.floor(score)
+        score=math.floor(int(score))
         student1=Student.find(student_id)
         course1=Course.find(course_id)
         weightscore=(int(course1.weight))*int(score)
@@ -125,14 +128,42 @@ class Mark(Course):
             return None
     
     @staticmethod
-    def WeightedSum():
-        sumscore=0
-        print(f"Search for GPA: ")
-        student_id=input("Student ID:")
-        for i in Mark.marks:
-            if student_id in i:
-                sumscore+=int(Mark.marks[i].weightscore)
-        return sumscore/int(Course.Totalweight())
+    def sort():
+        print(f"You are using GPA sorting function...")
+        print(f"Searching for GPA...")
+        for each_student in Student.students:
+            sum_score=0
+            for iterate_over_tuple in Mark.marks:
+                if each_student in iterate_over_tuple[0]:
+                    sum_score+=int(Mark.marks[iterate_over_tuple].weightscore)
+            gpa_score=sum_score/int(Course.Totalweight())
+            print(f" The GPA score of student ID {each_student} is: {gpa_score}")
+            Mark.gpa[each_student]=gpa_score
+        sorted_marksheet=sorted(Mark.gpa.items(),key=lambda x:x[1])
+        print(sorted_marksheet)
+        return(sorted_marksheet)
+        return Mark.gpa
+    
+    @staticmethod
+    def personal_gpa():
+        print(f"You are using GPA searching function...")
+        student_id=input("Please input student's ID to start searching: ")
+        print(f"Searching for GPA...")
+        sum_score=0
+        for iterate_over_tuple in Mark.marks:
+                if student_id in iterate_over_tuple[0]:
+                    sum_score+=int(Mark.marks[iterate_over_tuple].weightscore)
+        gpa_score=sum_score/int(Course.Totalweight())
+        print(f" The GPA score of student ID {student_id} is: {gpa_score}")
+        return gpa_score
+    @staticmethod
+    def find_mark():
+        print("finding grade:")
+        student_id=input("student id:")
+        course_id=input("course id:")
+        mark1=Mark.find(student_id,course_id)
+        print(mark1.score)
+        print(mark1.weightscore)
 
 numberofstudentinput=input("Number of student in class: ")
 numberofstudent=int(numberofstudentinput)
@@ -143,22 +174,18 @@ numberofcourseinput=input("Number of course in class: ")
 numberofcourse=int(numberofcourseinput)
 for i in range(1,(numberofcourse)+1):
     Course.create()
-a=1
-while a:
-    Mark.create()
-    i=input("Continue writing? \n0=no,1=yes")
-    a=int(i)
-def markfind():
-    print("finding grade:")
-    student_id=input("student id:")
-    course_id=input("course id:")
-    mark1=Mark.find(student_id,course_id)
-    print(mark1.score)
-    print(mark1.weightscore)
-markfind()
-print(Mark.WeightedSum())
+def create_mark_object():
+    a=1
+    while a:
+        Mark.create()
+        i=input("Continue writing? \n0=no,1=yes")
+        a=int(i)
+create_mark_object()
+Mark.find_mark()
 Student.show()
 Course.show()
 Mark.show()
+Mark.sort()
+Mark.personal_gpa()
 
 
